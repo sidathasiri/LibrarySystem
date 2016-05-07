@@ -145,7 +145,7 @@ public class BookHandler {
     public ArrayList<String> loadOrderedBookData(int id) {
 
         ArrayList<String> bookData = new ArrayList<>();
-        String query = "SELECT * FROM book_order WHERE Member_Id='" + id + "'";
+        String query = "SELECT * FROM book_order WHERE Member_Id='" + id + "' && Status='Active'";
         try {
             Statement stmt = (Statement) conn.createStatement(
                     ResultSet.TYPE_SCROLL_INSENSITIVE,
@@ -271,6 +271,25 @@ public class BookHandler {
                     ResultSet.CONCUR_UPDATABLE);
 
             stmt.executeUpdate(query);
+        } catch (SQLException ex) {
+            Logger.getLogger(BookHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void returnBook(Book bookObj) {
+        Statement stmt;
+        String query = "SELECT * FROM book WHERE Id='" + bookObj.getBookId() + "'";
+        try {
+            stmt = (Statement) conn.createStatement(
+                    ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    ResultSet.CONCUR_UPDATABLE);
+
+            ResultSet rs = stmt.executeQuery(query);
+
+            rs.absolute(1);
+            rs.updateString("Status", "Available");
+            rs.updateRow();
+
         } catch (SQLException ex) {
             Logger.getLogger(BookHandler.class.getName()).log(Level.SEVERE, null, ex);
         }

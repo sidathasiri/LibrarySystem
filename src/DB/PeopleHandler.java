@@ -267,6 +267,7 @@ public class PeopleHandler {
 
             rs.absolute(1);
             rs.updateInt("No_Of_Taken_Books", memObj.getTakenBooks());
+            rs.updateString("Order_Id", memObj.getOrder().getId());
             rs.updateRow();
 
         } catch (SQLException ex) {
@@ -318,7 +319,7 @@ public class PeopleHandler {
         String query1 = "SELECT * FROM member WHERE Username='" + memObj.getUsername() + "'";
         Statement stmt1, stmt2;
         boolean check = true;
-        
+
         try {
             stmt1 = (Statement) conn.createStatement(
                     ResultSet.TYPE_SCROLL_INSENSITIVE,
@@ -349,6 +350,29 @@ public class PeopleHandler {
         } catch (SQLException ex) {
             Logger.getLogger(PeopleHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public void returnBook(Member memObj) {
+        String query = "SELECT * FROM member WHERE Id='" + memObj.getId() + "'";
+        Statement stmt;
+        try {
+            stmt = (Statement) conn.createStatement(
+                    ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    ResultSet.CONCUR_UPDATABLE);
+            ResultSet rs = stmt.executeQuery(query);
+
+            rs.absolute(1);
+            rs.updateInt("No_Of_Taken_Books", memObj.getTakenBooks());
+            if(memObj.getTakenBooks()==0){
+                rs.updateString("Order_Id", null);
+            }
+            rs.updateRow();
+
+
+        } catch (SQLException ex) {
+            Logger.getLogger(PeopleHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
 
 
     }

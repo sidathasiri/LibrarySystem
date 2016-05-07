@@ -93,7 +93,7 @@ public class Librarian_Window extends javax.swing.JFrame {
         searchReturnBtn = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
         jTable4 = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
+        returnBookBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -423,7 +423,12 @@ public class Librarian_Window extends javax.swing.JFrame {
         });
         jScrollPane4.setViewportView(jTable4);
 
-        jButton1.setText("Return Book");
+        returnBookBtn.setText("Return Book");
+        returnBookBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                returnBookBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -442,7 +447,7 @@ public class Librarian_Window extends javax.swing.JFrame {
                 .addContainerGap(23, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(returnBookBtn)
                 .addGap(76, 76, 76))
         );
         jPanel4Layout.setVerticalGroup(
@@ -457,7 +462,7 @@ public class Librarian_Window extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(40, 40, 40)
-                .addComponent(jButton1)
+                .addComponent(returnBookBtn)
                 .addContainerGap(126, Short.MAX_VALUE))
         );
 
@@ -529,6 +534,10 @@ public class Librarian_Window extends javax.swing.JFrame {
             loadTable();
         }
     }//GEN-LAST:event_searchReturnBtnActionPerformed
+
+    private void returnBookBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnBookBtnActionPerformed
+        libraryObj.loggedLibrarian.returnBook(jTextField5.getText(), table4.getModel().getValueAt(table4.getSelectedRow(), 1)+"");
+    }//GEN-LAST:event_returnBookBtnActionPerformed
     public void setLogin(Login x) {
         login = x;
     }
@@ -589,7 +598,6 @@ public class Librarian_Window extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bookSearchBtn;
     private javax.swing.JButton issueBtn;
-    private javax.swing.JButton jButton1;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -621,6 +629,7 @@ public class Librarian_Window extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField5;
     private javax.swing.JButton logoutBtn;
     private javax.swing.JButton memSearchBtn;
+    private javax.swing.JButton returnBookBtn;
     private javax.swing.JButton searchBtn;
     private javax.swing.JButton searchReturnBtn;
     // End of variables declaration//GEN-END:variables

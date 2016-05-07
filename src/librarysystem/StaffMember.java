@@ -88,8 +88,13 @@ public abstract class StaffMember extends Person {
             bookObj.setStatus("Available");
 
             bookHandlerObj.returnBook(bookObj);
-            Order orderObj;
-       //     orderObj = new Order(memObj, bookObj, now, dueDate);
+            peopleHandlerObj.returnBook(memObj);
+            
+            if(memObj.getTakenBooks()==0){
+                orderHandlerObj.bookReturnUpdate(memObj);
+            }
+            
+            
 
 
         } catch (ParseException ex) {

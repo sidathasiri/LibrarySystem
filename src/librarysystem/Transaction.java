@@ -8,8 +8,17 @@ import java.util.ArrayList;
 public class Transaction {
     private String status;
     private Date issueDate, dueDate;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
     private Member member;
     private Book book1, book2;
+    private String id;
     
     public Transaction(Member mem, Book book, Date issueDate, Date dueDate){
         this.member = mem;
