@@ -2,28 +2,22 @@ package librarysystem;
 
 import java.sql.Date;
 
+public class Return extends Transaction {
 
-public class Return extends Transaction{
-    
-    private Order order;
-    
     private Date returnDate;
-    public Return(Member mem, Book book, Order or, Date issueDate, Date dueDate){
+
+    public Return(Member mem, Book book, Date issueDate, Date dueDate, Date returnDate) {
         super(mem, book, issueDate, dueDate);
-        setOrder(or);
-        
+        setReturnDate(returnDate);
+
         //set issue date from order
         //set due date from order
         //set return date (current date)
-      
+
     }
 
-     
-    public void setOrder(Order order){
-        this.order = order;
-    }
-    
-    public void setReturnDate(Date returnDate){
+
+    public void setReturnDate(Date returnDate) {
         this.returnDate = returnDate;
     }
 }

@@ -3,6 +3,7 @@ package librarysystem;
 import DB.BookHandler;
 import DB.OrderHandler;
 import DB.PeopleHandler;
+import DB.ReturnHandler;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ public abstract class StaffMember extends Person {
     PeopleHandler peopleHandlerObj = new PeopleHandler("admin");
     BookHandler bookHandlerObj = new BookHandler("admin");
     OrderHandler orderHandlerObj = new OrderHandler("admin");
+    ReturnHandler returnHandlerObj = new ReturnHandler("admin");
 
     public StaffMember(String name, String address, String contactNum) {
         setName(name);
@@ -68,7 +70,7 @@ public abstract class StaffMember extends Person {
         }
     }
 
-    public void returnBook(String memId, String bookId) {
+    public void returnBook(String memId, String bookId, String issueDate, String dueDate) {
         ArrayList<String> memberDetails = peopleHandlerObj.searchMember(Integer.parseInt(memId));
         ArrayList<String> bookDetails = bookHandlerObj.loadBookData(Integer.parseInt(bookId));
         SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
@@ -89,12 +91,21 @@ public abstract class StaffMember extends Person {
 
             bookHandlerObj.returnBook(bookObj);
             peopleHandlerObj.returnBook(memObj);
-            
-            if(memObj.getTakenBooks()==0){
+
+            if (memObj.getTakenBooks() == 0) {
                 orderHandlerObj.bookReturnUpdate(memObj);
             }
-            
-            
+
+            parsed = format.parse(issueDate);
+            java.sql.Date issueD = new java.sql.Date(parsed.getTime());
+
+            parsed = format.parse(dueDate);
+            java.sql.Date dueD = new java.sql.Date(parsed.getTime());
+            java.sql.Date now = new java.sql.Date(Calendar.getInstance().getTime().getTime());
+            Return returnObj = new Return(memObj, bookObj, issueD, dueD, now);
+            returnHandlerObj.createReturn(returnObj, memObj, issueD, dueD, now);
+
+
 
 
         } catch (ParseException ex) {

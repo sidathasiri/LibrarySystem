@@ -54,8 +54,8 @@ public class OrderHandler {
                 ResultSet rs = stmt.executeQuery(query);
 
                 rs.absolute(1);
-                rs.updateString("Book2", orderObj.getBook1().getName());
-                rs.updateString("Book2_Id", orderObj.getBook1().getBookId());
+                rs.updateString("Book2", orderObj.getBook().getName());
+                rs.updateString("Book2_Id", orderObj.getBook().getBookId());
                 rs.updateDate("Book2_Issue_Date", orderObj.getIssueDate());
                 rs.updateDate("Book2_Due_Date", orderObj.getDueDate());
                 rs.updateInt("No_Of_Books", orderObj.getMember().getTakenBooks());
@@ -67,7 +67,7 @@ public class OrderHandler {
             }
 
         } else {
-            String query = "INSERT INTO book_order (Member_Id, Book1, No_of_Books, Book1_id, Book1_Issue_Date, Book1_Due_Date) VALUES ('" + orderObj.getMember().getId() + "','" + orderObj.getBook1().getName() + "', '" + orderObj.getMember().getTakenBooks() + "', '" + orderObj.getBook1().getBookId() + "', '" + orderObj.getIssueDate() + "','" + orderObj.getDueDate() + "')";
+            String query = "INSERT INTO book_order (Member_Id, Book1, No_of_Books, Book1_id, Book1_Issue_Date, Book1_Due_Date) VALUES ('" + orderObj.getMember().getId() + "','" + orderObj.getBook().getName() + "', '" + orderObj.getMember().getTakenBooks() + "', '" + orderObj.getBook().getBookId() + "', '" + orderObj.getIssueDate() + "','" + orderObj.getDueDate() + "')";
             String newquery = "SELECT * FROM book_order WHERE Member_Id='" + orderObj.getMember().getId() + "' && Status='Active'";
             try {
                 stmt = (Statement) conn.createStatement(
@@ -109,6 +109,26 @@ public class OrderHandler {
         }
     }
 
-    public void loadOrderDetails(String orderId) {
+    public int getOrderId(Member memObj) {
+        Statement stmt;
+        int id=0;
+        String query = "SELECT * FROM book_order WHERE Member_Id='" + memObj.getId() + "' && Status='Active'";
+        try {
+            stmt = (Statement) conn.createStatement(
+                    ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    ResultSet.CONCUR_UPDATABLE);
+
+            ResultSet rs = stmt.executeQuery(query);
+            
+            if(rs.next()){
+                id = rs.getInt("Order_Id");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return id;
+
+
     }
 }

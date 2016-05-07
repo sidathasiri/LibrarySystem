@@ -31,6 +31,7 @@ public class Librarian_Window extends javax.swing.JFrame {
     BookHandler bookHandlerObj = new BookHandler("admin");
     Login login;
     JTable table1, table2, table3, table4;
+    DefaultTableModel model;
     Book bookObj;
     Member memberObj;
     JComboBox comboBox;
@@ -40,6 +41,7 @@ public class Librarian_Window extends javax.swing.JFrame {
         table1 = jTable1;
         table2 = jTable2;
         table3 = jTable3;
+        table4 = jTable4;
         comboBox = jComboBox1;
 
         comboBox.addItem("No Category");
@@ -517,10 +519,15 @@ public class Librarian_Window extends javax.swing.JFrame {
 
     private void issueBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_issueBtnActionPerformed
         libraryObj.loggedLibrarian.issueBook(Integer.parseInt(jTextField1.getText()), Integer.parseInt(jTextField2.getText()));
+        jTextField1.setText("");
+        jTextField2.setText("");
     }//GEN-LAST:event_issueBtnActionPerformed
 
     private void searchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBtnActionPerformed
         bookHandlerObj.searchBook(jTextField3.getText(), jTextField4.getText(), comboBox.getSelectedItem().toString(), table3);
+        jTextField3.setText("");
+        jTextField4.setText("");
+        jComboBox1.setSelectedItem("No Category");
     }//GEN-LAST:event_searchBtnActionPerformed
 
     private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
@@ -536,7 +543,8 @@ public class Librarian_Window extends javax.swing.JFrame {
     }//GEN-LAST:event_searchReturnBtnActionPerformed
 
     private void returnBookBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnBookBtnActionPerformed
-        libraryObj.loggedLibrarian.returnBook(jTextField5.getText(), table4.getModel().getValueAt(table4.getSelectedRow(), 1)+"");
+        libraryObj.loggedLibrarian.returnBook(jTextField5.getText(), table4.getModel().getValueAt(table4.getSelectedRow(), 1) + "", table4.getModel().getValueAt(table4.getSelectedRow(), 2)+"", table4.getModel().getValueAt(table4.getSelectedRow(), 3)+"");
+        model.removeRow(table4.getSelectedRow());
     }//GEN-LAST:event_returnBookBtnActionPerformed
     public void setLogin(Login x) {
         login = x;
@@ -545,7 +553,7 @@ public class Librarian_Window extends javax.swing.JFrame {
     public void loadTable() {
         BookHandler bookHandlerObj = new BookHandler("member");
         ArrayList<String> bookData;
-        table4 = jTable4;
+        model = (DefaultTableModel) table4.getModel();
         bookData = bookHandlerObj.loadOrderedBookData(Integer.parseInt(jTextField5.getText()));
         if (bookData.get(8).equalsIgnoreCase("active") && Integer.parseInt(bookData.get(9)) > 0) {
             Object row1[] = {bookData.get(0), bookData.get(1), bookData.get(2), bookData.get(3)};

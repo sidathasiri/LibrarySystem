@@ -293,8 +293,5 @@ public class BookHandler {
         } catch (SQLException ex) {
             Logger.getLogger(BookHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-
-
     }
 }
