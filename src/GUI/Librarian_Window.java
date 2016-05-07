@@ -30,7 +30,7 @@ public class Librarian_Window extends javax.swing.JFrame {
     PeopleHandler peopleHandlerObj = new PeopleHandler("admin");
     BookHandler bookHandlerObj = new BookHandler("admin");
     Login login;
-    JTable table1, table2, table3;
+    JTable table1, table2, table3, table4;
     Book bookObj;
     Member memberObj;
     JComboBox comboBox;
@@ -41,12 +41,12 @@ public class Librarian_Window extends javax.swing.JFrame {
         table2 = jTable2;
         table3 = jTable3;
         comboBox = jComboBox1;
-        
+
         comboBox.addItem("No Category");
         for (String x : LibrarySystem.categoryList) {
             comboBox.addItem(x);
         }
-        
+
     }
 
     /**
@@ -87,6 +87,13 @@ public class Librarian_Window extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable3 = new javax.swing.JTable();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel10 = new javax.swing.JLabel();
+        jTextField5 = new javax.swing.JTextField();
+        searchReturnBtn = new javax.swing.JButton();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jTable4 = new javax.swing.JTable();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -374,10 +381,87 @@ public class Librarian_Window extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(jLabel9)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE))
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Search Book", jPanel3);
+
+        jPanel4.setBackground(new java.awt.Color(51, 51, 51));
+
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel10.setText("Member ID:");
+
+        searchReturnBtn.setText("Search");
+        searchReturnBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchReturnBtnActionPerformed(evt);
+            }
+        });
+
+        jTable4.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Name", "ID", "Issue Date", "Due Date"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane4.setViewportView(jTable4);
+
+        jButton1.setText("Return Book");
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(searchReturnBtn)
+                        .addGroup(jPanel4Layout.createSequentialGroup()
+                            .addComponent(jLabel10)
+                            .addGap(43, 43, 43)
+                            .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 905, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(23, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(76, 76, 76))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(51, 51, 51)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel10))
+                .addGap(28, 28, 28)
+                .addComponent(searchReturnBtn)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(40, 40, 40)
+                .addComponent(jButton1)
+                .addContainerGap(126, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("Return Book", jPanel4);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -403,6 +487,7 @@ public class Librarian_Window extends javax.swing.JFrame {
         memDetails = peopleHandlerObj.searchMember(Integer.parseInt(jTextField1.getText()));
         Object row[] = {memDetails.get(0), memDetails.get(1), memDetails.get(2)};
         DefaultTableModel model = (DefaultTableModel) table1.getModel();
+        model.setRowCount(0);
         model.addRow(row);
 
 
@@ -420,12 +505,13 @@ public class Librarian_Window extends javax.swing.JFrame {
         bookDetail = bookHandlerObj.loadBookData(Integer.parseInt(jTextField2.getText()));
         Object row[] = {bookDetail.get(0), bookDetail.get(1), bookDetail.get(2), bookDetail.get(3)};
         DefaultTableModel model = (DefaultTableModel) table2.getModel();
+        model.setRowCount(0);
         model.addRow(row);
 
     }//GEN-LAST:event_bookSearchBtnActionPerformed
 
     private void issueBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_issueBtnActionPerformed
-       libraryObj.loggedLibrarian.issueBook(Integer.parseInt(jTextField1.getText()), Integer.parseInt(jTextField2.getText()));
+        libraryObj.loggedLibrarian.issueBook(Integer.parseInt(jTextField1.getText()), Integer.parseInt(jTextField2.getText()));
     }//GEN-LAST:event_issueBtnActionPerformed
 
     private void searchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBtnActionPerformed
@@ -435,8 +521,31 @@ public class Librarian_Window extends javax.swing.JFrame {
     private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField4ActionPerformed
+
+    private void searchReturnBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchReturnBtnActionPerformed
+        ArrayList<String> memDetails = new ArrayList<>();
+        memDetails = peopleHandlerObj.searchMember(Integer.parseInt(jTextField5.getText()));
+        if (Integer.parseInt(memDetails.get(2)) > 0) {
+            loadTable();
+        }
+    }//GEN-LAST:event_searchReturnBtnActionPerformed
     public void setLogin(Login x) {
         login = x;
+    }
+
+    public void loadTable() {
+        BookHandler bookHandlerObj = new BookHandler("member");
+        ArrayList<String> bookData;
+        table4 = jTable4;
+        bookData = bookHandlerObj.loadOrderedBookData(Integer.parseInt(jTextField5.getText()));
+        if (bookData.get(8).equalsIgnoreCase("active") && Integer.parseInt(bookData.get(9)) > 0) {
+            Object row1[] = {bookData.get(0), bookData.get(1), bookData.get(2), bookData.get(3)};
+            Object row2[] = {bookData.get(4), bookData.get(5), bookData.get(6), bookData.get(7)};
+            DefaultTableModel model = (DefaultTableModel) table4.getModel();
+            model.setRowCount(0);
+            model.addRow(row1);
+            model.addRow(row2);
+        }
     }
 
     public void setTitle(String name) {
@@ -480,8 +589,10 @@ public class Librarian_Window extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bookSearchBtn;
     private javax.swing.JButton issueBtn;
+    private javax.swing.JButton jButton1;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -493,19 +604,24 @@ public class Librarian_Window extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
     private javax.swing.JTable jTable3;
+    private javax.swing.JTable jTable4;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
+    private javax.swing.JTextField jTextField5;
     private javax.swing.JButton logoutBtn;
     private javax.swing.JButton memSearchBtn;
     private javax.swing.JButton searchBtn;
+    private javax.swing.JButton searchReturnBtn;
     // End of variables declaration//GEN-END:variables
 }

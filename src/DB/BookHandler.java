@@ -48,6 +48,8 @@ public class BookHandler {
         String query;
         Statement stmt;
         ArrayList<String> searchDetails = new ArrayList<>();
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        model.setRowCount(0);
 
         ResultSet rs = null;
         boolean check = false;
@@ -108,7 +110,7 @@ public class BookHandler {
                 if (rs.next()) {
                     rs.beforeFirst();
                     while (rs.next()) {
-                        searchDetails.add(rs.getInt("Id")+"");
+                        searchDetails.add(rs.getInt("Id") + "");
                         searchDetails.add(rs.getString("Name"));
                         searchDetails.add(rs.getString("Author"));
                         searchDetails.add(rs.getString("ISBN"));
@@ -124,10 +126,8 @@ public class BookHandler {
                             row[i] = searchDetails.get(i);
 
                         }
-
-                        DefaultTableModel model = (DefaultTableModel) table.getModel();
                         model.addRow(row);
-                        
+
                         searchDetails.clear();
                     }
 
@@ -163,6 +163,7 @@ public class BookHandler {
                 bookData.add(rs.getDate("Book2_Issue_Date") + "");
                 bookData.add(rs.getDate("Book2_Due_Date") + "");
                 bookData.add(rs.getString("Status"));
+                bookData.add(rs.getString("No_of_Books"));
             }
 
 
