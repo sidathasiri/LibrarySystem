@@ -43,19 +43,19 @@ public abstract class StaffMember extends Person {
             if (memObj.getTakenBooks() < 2) {
                 if (bookHandlerObj.checkStatus(bookId).equalsIgnoreCase("available")) {
                     memObj.setTakenBooks((memObj.getTakenBooks() + 1));
-                    peopleHandlerObj.issueBooktoUser(memObj);
-                    bookHandlerObj.issueBook(bookObj);
                     bookObj.setStatus("Ünavailable");
-                    
-                    
+
+
                     java.sql.Date now = new java.sql.Date(new java.util.Date().getTime());
                     java.sql.Date dueDate = new java.sql.Date(now.getTime() + 336 * 60 * 60 * 1000);
                     Order orderObj;
                     orderObj = new Order(memObj, bookObj, now, dueDate);
-                    System.out.println("order:"+orderObj.getIssueDate());
-                    orderHandlerObj.createOrder(orderObj);
-                    
-               
+                    memObj.setOrder(orderObj);
+                    orderHandlerObj.createOrder(orderObj, memObj);
+                    peopleHandlerObj.issueBooktoUser(memObj);
+                    bookHandlerObj.issueBook(bookObj);
+
+
                 } else {
                     JOptionPane.showMessageDialog(null, "Book not available!", "Error", JOptionPane.ERROR_MESSAGE);
                 }
@@ -69,5 +69,34 @@ public abstract class StaffMember extends Person {
     }
 
     public void returnBook(String memId, String bookId) {
+        ArrayList<String> memberDetails = peopleHandlerObj.searchMember(Integer.parseInt(memId));
+        ArrayList<String> bookDetails = bookHandlerObj.loadBookData(Integer.parseInt(bookId));
+        SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+        java.util.Date parsed;
+        try {
+            parsed = format.parse("20100214");
+            java.sql.Date date = new java.sql.Date(parsed.getTime());
+
+            Member memObj = new Member(memberDetails.get(0), memberDetails.get(4), memberDetails.get(3));
+            memObj.setTakenBooks(Integer.parseInt(memberDetails.get(2)));
+            memObj.setId(memberDetails.get(1));
+
+            Book bookObj = new Book(bookDetails.get(0), bookDetails.get(2), bookDetails.get(4), Integer.parseInt(bookDetails.get(5)), bookDetails.get(6), date, Integer.parseInt(bookDetails.get(7)));
+            bookObj.setBookId(bookDetails.get(1));
+
+            memObj.setTakenBooks(memObj.getTakenBooks() - 1);
+            bookObj.setStatus("Available");
+
+            bookHandlerObj.returnBook(bookObj);
+            Order orderObj;
+       //     orderObj = new Order(memObj, bookObj, now, dueDate);
+
+
+        } catch (ParseException ex) {
+            Logger.getLogger(StaffMember.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+
+
     }
 }
