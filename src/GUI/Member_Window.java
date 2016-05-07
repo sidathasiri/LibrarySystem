@@ -587,16 +587,16 @@ public class Member_Window extends javax.swing.JFrame {
 
     private void searchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBtnActionPerformed
         table2 = jTable2;
-     //   ArrayList<String> results = LibrarySystem.loggedMember.searchBook(jTextField4.getText(), jTextField5.getText(), jComboBox1.getSelectedItem().toString(), table2);
-     LibrarySystem.loggedMember.searchBook(jTextField4.getText(), jTextField5.getText(), jComboBox1.getSelectedItem().toString(), table2);
+        //   ArrayList<String> results = LibrarySystem.loggedMember.searchBook(jTextField4.getText(), jTextField5.getText(), jComboBox1.getSelectedItem().toString(), table2);
+        LibrarySystem.loggedMember.searchBook(jTextField4.getText(), jTextField5.getText(), jComboBox1.getSelectedItem().toString(), table2);
         /*  Object row[] = new Object[8];
 
-        for (int i = 0; i < results.size(); i++) {
-            row[i] = results.get(i);
-        }
+         for (int i = 0; i < results.size(); i++) {
+         row[i] = results.get(i);
+         }
 
-        DefaultTableModel model = (DefaultTableModel) table2.getModel();
-        model.addRow(row);*/
+         DefaultTableModel model = (DefaultTableModel) table2.getModel();
+         model.addRow(row);*/
 
 
     }//GEN-LAST:event_searchBtnActionPerformed
@@ -626,11 +626,13 @@ public class Member_Window extends javax.swing.JFrame {
         ArrayList<String> bookData;
         table1 = jTable1;
         bookData = bookHandlerObj.loadOrderedBookData(Integer.parseInt(jLabel10.getText()));
-        Object row1[] = {bookData.get(0), bookData.get(1), bookData.get(2), bookData.get(3)};
-        Object row2[] = {bookData.get(4), bookData.get(5), bookData.get(6), bookData.get(7)};
-        DefaultTableModel model = (DefaultTableModel) table1.getModel();
-        model.addRow(row1);
-        model.addRow(row2);
+        if (bookData.get(8).equalsIgnoreCase("active")) {
+            Object row1[] = {bookData.get(0), bookData.get(1), bookData.get(2), bookData.get(3)};
+            Object row2[] = {bookData.get(4), bookData.get(5), bookData.get(6), bookData.get(7)};
+            DefaultTableModel model = (DefaultTableModel) table1.getModel();
+            model.addRow(row1);
+            model.addRow(row2);
+        }
     }
 
     /**

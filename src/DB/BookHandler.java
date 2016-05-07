@@ -162,6 +162,7 @@ public class BookHandler {
                 bookData.add(rs.getInt("Book2_Id") + "");
                 bookData.add(rs.getDate("Book2_Issue_Date") + "");
                 bookData.add(rs.getDate("Book2_Due_Date") + "");
+                bookData.add(rs.getString("Status"));
             }
 
 
