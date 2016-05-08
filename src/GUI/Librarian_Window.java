@@ -16,6 +16,7 @@ import librarysystem.LibrarySystem;
 import librarysystem.Member;
 import librarysystem.Order;
 import librarysystem.Person;
+import DB.ReserveHandler;
 
 /**
  *
@@ -29,6 +30,7 @@ public class Librarian_Window extends javax.swing.JFrame {
     LibrarySystem libraryObj = new LibrarySystem();
     PeopleHandler peopleHandlerObj = new PeopleHandler("admin");
     BookHandler bookHandlerObj = new BookHandler("admin");
+    ReserveHandler reserveHandlerObj = new ReserveHandler("admin");
     Login login;
     JTable table1, table2, table3, table4;
     DefaultTableModel model;
@@ -519,6 +521,11 @@ public class Librarian_Window extends javax.swing.JFrame {
 
     private void issueBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_issueBtnActionPerformed
         libraryObj.loggedLibrarian.issueBook(Integer.parseInt(jTextField1.getText()), Integer.parseInt(jTextField2.getText()));
+        if (reserveHandlerObj.validateReservation(Integer.parseInt(jTextField1.getText()), Integer.parseInt(jTextField2.getText()))) {
+            //  System.out.println("check");
+            reserveHandlerObj.cancelReservation(Integer.parseInt(jTextField1.getText()));
+            bookHandlerObj.updateReservation(Integer.parseInt(jTextField2.getText()), "false");
+        }
         jTextField1.setText("");
         jTextField2.setText("");
     }//GEN-LAST:event_issueBtnActionPerformed
@@ -543,7 +550,9 @@ public class Librarian_Window extends javax.swing.JFrame {
     }//GEN-LAST:event_searchReturnBtnActionPerformed
 
     private void returnBookBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnBookBtnActionPerformed
-        libraryObj.loggedLibrarian.returnBook(jTextField5.getText(), table4.getModel().getValueAt(table4.getSelectedRow(), 1) + "", table4.getModel().getValueAt(table4.getSelectedRow(), 2)+"", table4.getModel().getValueAt(table4.getSelectedRow(), 3)+"");
+        libraryObj.loggedLibrarian.returnBook(jTextField5.getText(), table4.getModel().getValueAt(table4.getSelectedRow(), 1) + "", table4.getModel().getValueAt(table4.getSelectedRow(), 2) + "", table4.getModel().getValueAt(table4.getSelectedRow(), 3) + "");
+
+
         model.removeRow(table4.getSelectedRow());
     }//GEN-LAST:event_returnBookBtnActionPerformed
     public void setLogin(Login x) {
