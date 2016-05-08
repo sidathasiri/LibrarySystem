@@ -2,12 +2,14 @@ package librarysystem;
 
 import DB.ReserveHandler;
 import java.util.ArrayList;
+import DB.BookHandler;
 
 public class Member extends Person{
     private Book book1,book2;
     private Order order;
     private int takenBooks;
     ReserveHandler reserveHandlerObj = new ReserveHandler("admin");
+    BookHandler bookHandlerObj = new BookHandler("admin");
     
     public Member(String name, String address, String contactNum){
         setName(name);
@@ -78,6 +80,11 @@ public class Member extends Person{
     
     public void reserveBook(int bookId){
         reserveHandlerObj.addReservation(bookId);
+    }
+    
+    public void cancelReserve(int bookId){
+        reserveHandlerObj.cancelReservation(Integer.parseInt(LibrarySystem.loggedMember.getId()));
+        bookHandlerObj.updateReservation(bookId, "false");
     }
 
     

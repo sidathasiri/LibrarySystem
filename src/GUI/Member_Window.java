@@ -683,7 +683,9 @@ public class Member_Window extends javax.swing.JFrame {
     }//GEN-LAST:event_reserveBtnActionPerformed
 
     private void cancelRequestBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelRequestBtnActionPerformed
-        // TODO add your handling code here:
+        LibrarySystem.loggedMember.cancelReserve(Integer.parseInt(jTable3.getValueAt(jTable3.getSelectedRow(), 0).toString()));
+        jTable3.removeAll();
+        
     }//GEN-LAST:event_cancelRequestBtnActionPerformed
 
     public void setLogin(Login x) {

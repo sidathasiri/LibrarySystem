@@ -80,4 +80,47 @@ public class ReserveHandler {
         return bookId;
 
     }
+
+    public void cancelReservation(int memId) {
+        String query = "SELECT * FROM reservation WHERE Member_Id='" + memId + "' && Status='Active'";
+        Statement stmt;
+
+        try {
+            stmt = (Statement) conn.createStatement(
+                    ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    ResultSet.CONCUR_UPDATABLE);
+
+            ResultSet rs = stmt.executeQuery(query);
+
+            rs.absolute(1);
+            rs.updateString("Status", "completed");
+            rs.updateRow();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(BookHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public boolean validateReservation(int memId, int bookId) {
+        String query = "SELECT * FROM reservation WHERE Member_Id='" + memId + "' && Status='Active' && Book_Id='" + bookId + "'";
+        Statement stmt;
+        boolean check = false;
+
+        try {
+            stmt = (Statement) conn.createStatement(
+                    ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    ResultSet.CONCUR_UPDATABLE);
+
+            ResultSet rs = stmt.executeQuery(query);
+
+            if (rs.next()) {
+                check = true;
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(BookHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return check;
+    }
 }

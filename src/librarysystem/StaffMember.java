@@ -4,6 +4,7 @@ import DB.BookHandler;
 import DB.OrderHandler;
 import DB.PeopleHandler;
 import DB.ReturnHandler;
+import DB.ReserveHandler;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ public abstract class StaffMember extends Person {
     BookHandler bookHandlerObj = new BookHandler("admin");
     OrderHandler orderHandlerObj = new OrderHandler("admin");
     ReturnHandler returnHandlerObj = new ReturnHandler("admin");
+    ReserveHandler reservationHandlerObj = new ReserveHandler("member");
 
     public StaffMember(String name, String address, String contactNum) {
         setName(name);
@@ -43,7 +45,7 @@ public abstract class StaffMember extends Person {
             bookObj.setBookId(bookDetails.get(1));
 
             if (memObj.getTakenBooks() < 2) {
-                if (bookHandlerObj.checkStatus(bookId).equalsIgnoreCase("available") && bookHandlerObj.checkReservation(bookId).equalsIgnoreCase("false")) {
+                if (bookHandlerObj.checkStatus(bookId).equalsIgnoreCase("available") && (bookHandlerObj.checkReservation(bookId).equalsIgnoreCase("false") || reservationHandlerObj.validateReservation(memId, bookId))) {
                     memObj.setTakenBooks((memObj.getTakenBooks() + 1));
                     bookObj.setStatus("Ünavailable");
 
