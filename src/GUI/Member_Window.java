@@ -32,6 +32,7 @@ public class Member_Window extends javax.swing.JFrame {
     public Member_Window() {
         initComponents();
         comboBox = jComboBox1;
+        table2 = jTable2;
 
         comboBox.addItem("No Category");
         for (String x : LibrarySystem.categoryList) {
@@ -455,6 +456,11 @@ public class Member_Window extends javax.swing.JFrame {
         jLabel26.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/search_book-512.png"))); // NOI18N
 
         reserveBtn.setText("Reserve");
+        reserveBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                reserveBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -595,20 +601,14 @@ public class Member_Window extends javax.swing.JFrame {
     }//GEN-LAST:event_changeBtnActionPerformed
 
     private void searchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBtnActionPerformed
-        table2 = jTable2;
-        //   ArrayList<String> results = LibrarySystem.loggedMember.searchBook(jTextField4.getText(), jTextField5.getText(), jComboBox1.getSelectedItem().toString(), table2);
+        
         LibrarySystem.loggedMember.searchBook(jTextField4.getText(), jTextField5.getText(), jComboBox1.getSelectedItem().toString(), table2);
-        /*  Object row[] = new Object[8];
-
-         for (int i = 0; i < results.size(); i++) {
-         row[i] = results.get(i);
-         }
-
-         DefaultTableModel model = (DefaultTableModel) table2.getModel();
-         model.addRow(row);*/
-
 
     }//GEN-LAST:event_searchBtnActionPerformed
+
+    private void reserveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reserveBtnActionPerformed
+        LibrarySystem.loggedMember.reserveBook(Integer.parseInt(jTable2.getValueAt(jTable2.getSelectedRow(), 0).toString()));
+    }//GEN-LAST:event_reserveBtnActionPerformed
 
     public void setLogin(Login x) {
         login = x;

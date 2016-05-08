@@ -319,4 +319,24 @@ public class BookHandler {
 
         return result;
     }
+    
+    public void updateReservation(int bookId, String entry){
+        String query = "SELECT * FROM book WHERE Id='" + bookId + "'";
+        Statement stmt;
+        try {
+            stmt = (Statement) conn.createStatement(
+                    ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    ResultSet.CONCUR_UPDATABLE);
+
+            ResultSet rs = stmt.executeQuery(query);
+
+            rs.absolute(1);
+            rs.updateString("isReserved", entry);
+            rs.updateRow();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(BookHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
 }
