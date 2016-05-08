@@ -49,16 +49,35 @@ public class ReserveHandler {
                     stmt.executeUpdate(query2);
                     bookHanderObj.updateReservation(bookId, "true");
                 } else {
-                    JOptionPane.showMessageDialog(null, "Book already reserved", "Book reservation", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Book is already reserved", "Book reservation", JOptionPane.INFORMATION_MESSAGE);
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "You have alredy reserved", "Book reservation", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "You have alredy reserved a book", "Book reservation", JOptionPane.ERROR_MESSAGE);
             }
 
         } catch (SQLException ex) {
             Logger.getLogger(ReserveHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
 
+    public int loadReservedBook(int memId) {
+        String query = "SELECT * FROM reservation WHERE Member_Id='" + memId + "' && Status='Active'";
+        Statement stmt;
+        int bookId = 0;
+        try {
+            stmt = (Statement) conn.createStatement(
+                    ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    ResultSet.CONCUR_UPDATABLE);
+            ResultSet rs = stmt.executeQuery(query);
+
+            if (rs.next()) {
+                bookId = rs.getInt("Book_Id");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ReserveHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return bookId;
 
     }
 }

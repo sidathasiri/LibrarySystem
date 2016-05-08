@@ -98,6 +98,11 @@ public class Member_Window extends javax.swing.JFrame {
         jTable2 = new javax.swing.JTable();
         jLabel26 = new javax.swing.JLabel();
         reserveBtn = new javax.swing.JButton();
+        jPanel5 = new javax.swing.JPanel();
+        jLabel27 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTable3 = new javax.swing.JTable();
+        cancelRequestBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Welcome Member");
@@ -530,6 +535,73 @@ public class Member_Window extends javax.swing.JFrame {
 
         jTabbedPane2.addTab("Search Book", jPanel4);
 
+        jPanel5.setBackground(new java.awt.Color(51, 51, 51));
+
+        jLabel27.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel27.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel27.setText("Your Reservations");
+
+        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ID", "Name", "Author", "ISBN", "Pages", "Category", "Edition"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane3.setViewportView(jTable3);
+
+        cancelRequestBtn.setText("Cancel Request");
+        cancelRequestBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelRequestBtnActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(33, 33, 33)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel27)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 1041, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(25, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(cancelRequestBtn)
+                .addGap(138, 138, 138))
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(61, 61, 61)
+                .addComponent(jLabel27)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(29, 29, 29)
+                .addComponent(cancelRequestBtn)
+                .addContainerGap(253, Short.MAX_VALUE))
+        );
+
+        jTabbedPane2.addTab("Reservations", jPanel5);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -610,6 +682,10 @@ public class Member_Window extends javax.swing.JFrame {
         LibrarySystem.loggedMember.reserveBook(Integer.parseInt(jTable2.getValueAt(jTable2.getSelectedRow(), 0).toString()));
     }//GEN-LAST:event_reserveBtnActionPerformed
 
+    private void cancelRequestBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelRequestBtnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cancelRequestBtnActionPerformed
+
     public void setLogin(Login x) {
         login = x;
     }
@@ -642,6 +718,15 @@ public class Member_Window extends javax.swing.JFrame {
             model.addRow(row1);
             model.addRow(row2);
         }
+    }
+    
+    public void loadReservedBooks(int bookId){
+        ArrayList<String> bookData;
+        bookData = bookHandlerObj.loadBookData(bookId);
+        System.out.println("test:"+bookId);
+        Object row[] = {bookData.get(1), bookData.get(0), bookData.get(2), bookData.get(4), bookData.get(5), bookData.get(6), bookData.get(7)};
+        DefaultTableModel model = (DefaultTableModel) jTable3.getModel();
+        model.addRow(row);
     }
 
     /**
@@ -679,6 +764,7 @@ public class Member_Window extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton cancelRequestBtn;
     private javax.swing.JButton changeBtn;
     private javax.swing.JButton jButton1;
     private javax.swing.JComboBox jComboBox1;
@@ -701,6 +787,7 @@ public class Member_Window extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -712,12 +799,15 @@ public class Member_Window extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
+    private javax.swing.JTable jTable3;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;

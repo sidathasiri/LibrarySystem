@@ -6,6 +6,7 @@ package GUI;
 
 import DB.BookHandler;
 import DB.PeopleHandler;
+import DB.ReserveHandler;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import librarysystem.Admin;
@@ -26,6 +27,7 @@ public class Login extends javax.swing.JFrame {
     LibrarySystem libraryObj = new LibrarySystem();
     PeopleHandler peopleHandlerObj = new PeopleHandler("member");
     BookHandler bookHandlerObj = new BookHandler("admin");
+    ReserveHandler reserveHandler = new ReserveHandler("member");
 
     public Login() {
         initComponents();
@@ -243,6 +245,11 @@ public class Login extends javax.swing.JFrame {
             Member_Window memWinObj = new Member_Window();
             memWinObj.setDetails(loadedData);
             memWinObj.setLogin(this);
+            if(reserveHandler.loadReservedBook(Integer.parseInt(obj.getId()))!=0){
+                memWinObj.loadReservedBooks(reserveHandler.loadReservedBook(Integer.parseInt(obj.getId())));
+            }
+            
+            
             this.dispose();
             memWinObj.setVisible(true);
         }
