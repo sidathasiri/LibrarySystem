@@ -34,7 +34,7 @@ public class ReturnHandler {
         }
     }
 
-    public void createReturn(Return returnObj, Member memObj, Date issueDate, Date dueDate, Date returnDate) {
+    public void createReturn(Return returnObj, Member memObj, Date issueDate, Date dueDate, Date returnDate, int orderId) {
         Statement stmt;
         String query1 = "SELECT * FROM book_return WHERE Member_Id='" + memObj.getId() + "' && Status='Active'";
         try {
@@ -55,7 +55,7 @@ public class ReturnHandler {
                 }
                 rs.updateRow();
             } else {
-                int orderId = orderHandlerObj.getOrderId(memObj);
+                System.out.println("orde id:"+orderId);
                 String query2 = "INSERT INTO book_return (Order_Id, member, Member_Id, Book1, Book1_Id, Book1_Issue_Date, Book1_Due_Date, Book1_Return_Date) VALUES('" + orderId + "', '" + memObj.getName() + "', '" + memObj.getId() + "', '" + returnObj.getBook().getName() + "', '" + returnObj.getBook().getBookId() + "', '" + issueDate + "', '" + dueDate + "','" + returnDate + "')";
                 stmt = (Statement) conn.createStatement(
                         ResultSet.TYPE_SCROLL_INSENSITIVE,

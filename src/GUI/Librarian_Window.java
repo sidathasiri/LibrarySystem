@@ -192,14 +192,14 @@ public class Librarian_Window extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Name", "Id", "Author", "Status"
+                "Name", "Id", "Author", "Status", "Reservation"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -312,14 +312,14 @@ public class Librarian_Window extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID", "Name", "Author", "ISBN", "No of Pages", "Category", "Published Date", "Edition", "Status"
+                "ID", "Name", "Author", "ISBN", "No of Pages", "Category", "Published Date", "Edition", "Status", "Reservation"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -383,7 +383,7 @@ public class Librarian_Window extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(jLabel9)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE))
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Search Book", jPanel3);
@@ -465,7 +465,7 @@ public class Librarian_Window extends javax.swing.JFrame {
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(40, 40, 40)
                 .addComponent(returnBookBtn)
-                .addContainerGap(126, Short.MAX_VALUE))
+                .addContainerGap(105, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Return Book", jPanel4);
@@ -510,7 +510,7 @@ public class Librarian_Window extends javax.swing.JFrame {
         ArrayList<String> bookDetail = new ArrayList<>();
         table2 = jTable2;
         bookDetail = bookHandlerObj.loadBookData(Integer.parseInt(jTextField2.getText()));
-        Object row[] = {bookDetail.get(0), bookDetail.get(1), bookDetail.get(2), bookDetail.get(3)};
+        Object row[] = {bookDetail.get(0), bookDetail.get(1), bookDetail.get(2), bookDetail.get(3), bookDetail.get(8)};
         DefaultTableModel model = (DefaultTableModel) table2.getModel();
         model.setRowCount(0);
         model.addRow(row);

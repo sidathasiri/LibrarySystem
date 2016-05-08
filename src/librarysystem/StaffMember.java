@@ -43,7 +43,7 @@ public abstract class StaffMember extends Person {
             bookObj.setBookId(bookDetails.get(1));
 
             if (memObj.getTakenBooks() < 2) {
-                if (bookHandlerObj.checkStatus(bookId).equalsIgnoreCase("available")) {
+                if (bookHandlerObj.checkStatus(bookId).equalsIgnoreCase("available") && bookHandlerObj.checkReservation(bookId).equalsIgnoreCase("false")) {
                     memObj.setTakenBooks((memObj.getTakenBooks() + 1));
                     bookObj.setStatus("Ünavailable");
 
@@ -91,8 +91,9 @@ public abstract class StaffMember extends Person {
 
             bookHandlerObj.returnBook(bookObj);
             peopleHandlerObj.returnBook(memObj);
-
+            int orderId = orderHandlerObj.getOrderId(memObj);
             if (memObj.getTakenBooks() == 0) {
+                
                 orderHandlerObj.bookReturnUpdate(memObj);
             }
 
@@ -103,10 +104,7 @@ public abstract class StaffMember extends Person {
             java.sql.Date dueD = new java.sql.Date(parsed.getTime());
             java.sql.Date now = new java.sql.Date(Calendar.getInstance().getTime().getTime());
             Return returnObj = new Return(memObj, bookObj, issueD, dueD, now);
-            returnHandlerObj.createReturn(returnObj, memObj, issueD, dueD, now);
-
-
-
+            returnHandlerObj.createReturn(returnObj, memObj, issueD, dueD, now, orderId);
 
         } catch (ParseException ex) {
             Logger.getLogger(StaffMember.class.getName()).log(Level.SEVERE, null, ex);

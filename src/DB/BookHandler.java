@@ -62,7 +62,7 @@ public class BookHandler {
 
             if (!name.equals("") && author.equals("") && cat.equals("No Category")) {
                 //search only by name
-                query = "SELECT * from book where Name='" + name + "'";
+                query = "SELECT * from book where Name='" + name + "";
                 rs = stmt.executeQuery(query);
                 check = true;
 
@@ -119,7 +119,8 @@ public class BookHandler {
                         searchDetails.add(rs.getDate("Published_Date") + "");
                         searchDetails.add(rs.getString("Issue_No"));
                         searchDetails.add(rs.getString("Status"));
-                        Object row[] = new Object[9];
+                        searchDetails.add(rs.getString("isReserved"));
+                        Object row[] = new Object[10];
 
 
                         for (int i = 0; i < searchDetails.size(); i++) {
@@ -164,6 +165,7 @@ public class BookHandler {
                 bookData.add(rs.getDate("Book2_Due_Date") + "");
                 bookData.add(rs.getString("Status"));
                 bookData.add(rs.getString("No_of_Books"));
+              
             }
 
 
@@ -192,6 +194,7 @@ public class BookHandler {
                 bookData.add(rs.getString("No_Of_Pages"));
                 bookData.add(rs.getString("Category"));
                 bookData.add(rs.getString("Issue_No"));
+                bookData.add(rs.getString("isReserved"));
             }
 
 
@@ -293,5 +296,27 @@ public class BookHandler {
         } catch (SQLException ex) {
             Logger.getLogger(BookHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    public String checkReservation(int bookId){
+     String result = null;
+        String query = "SELECT * FROM book WHERE Id='" + bookId + "'";
+        Statement stmt;
+        try {
+            stmt = (Statement) conn.createStatement(
+                    ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    ResultSet.CONCUR_UPDATABLE);
+
+            ResultSet rs = stmt.executeQuery(query);
+
+            if (rs.next()) {
+                result = rs.getString("isReserved");
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(BookHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return result;
     }
 }
