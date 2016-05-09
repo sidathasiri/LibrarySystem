@@ -1,10 +1,12 @@
 package DB;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -43,9 +45,11 @@ public class ReserveHandler {
                     ResultSet.CONCUR_UPDATABLE);
             ResultSet rs = stmt.executeQuery(query1);
 
+            java.sql.Date now = new java.sql.Date(new java.util.Date().getTime());
+
             if (!rs.next()) {
                 if (bookHanderObj.checkReservation(bookId).equalsIgnoreCase("false")) {
-                    String query2 = "INSERT INTO reservation (Member_Id, Book_Id) VALUES('" + memId + "', '" + bookId + "')";
+                    String query2 = "INSERT INTO reservation (Member_Id, Book_Id, reserved_date) VALUES('" + memId + "', '" + bookId + "', '" + now + "')";
                     stmt.executeUpdate(query2);
                     bookHanderObj.updateReservation(bookId, "true");
                 } else {
@@ -122,5 +126,36 @@ public class ReserveHandler {
         }
 
         return check;
+    }
+
+    public void clearExpiredReservation() {
+
+        java.sql.Date now = new java.sql.Date(new java.util.Date().getTime());
+        String query1 = "SELECT * FROM reservation WHERE Status='Active'";
+
+        Statement stmt;
+
+        try {
+            stmt = (Statement) conn.createStatement(
+                    ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    ResultSet.CONCUR_UPDATABLE);
+
+            ResultSet rs = stmt.executeQuery(query1);
+
+            while (rs.next()) {
+                Date reservedDate = rs.getDate("reserved_date");
+                java.sql.Date checkDate = new java.sql.Date(now.getTime() - 168 * 60 * 60 * 1000);
+                
+                
+                if (reservedDate.before(checkDate)) {
+                    rs.updateString("Status", "completed");
+                    rs.updateRow();
+                    bookHanderObj.updateReservation(rs.getInt("Book_Id"), "false");
+                }
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(BookHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

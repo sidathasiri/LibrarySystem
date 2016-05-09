@@ -27,11 +27,12 @@ public class Login extends javax.swing.JFrame {
     LibrarySystem libraryObj = new LibrarySystem();
     PeopleHandler peopleHandlerObj = new PeopleHandler("member");
     BookHandler bookHandlerObj = new BookHandler("admin");
-    ReserveHandler reserveHandler = new ReserveHandler("member");
+    ReserveHandler reserveHandler = new ReserveHandler("admin");
 
     public Login() {
         initComponents();
-        LibrarySystem.categoryList = bookHandlerObj.loadCategory();        
+        LibrarySystem.categoryList = bookHandlerObj.loadCategory();   
+        reserveHandler.clearExpiredReservation();
     }
 
     /**
