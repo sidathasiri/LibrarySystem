@@ -1,6 +1,7 @@
 package DB;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -62,7 +63,7 @@ public class BookHandler {
 
             if (!name.equals("") && author.equals("") && cat.equals("No Category")) {
                 //search only by name
-                query = "SELECT * from book where Name='" + name + "";
+                query = "SELECT * from book where Name='" + name + "'";
                 rs = stmt.executeQuery(query);
                 check = true;
 
@@ -165,7 +166,7 @@ public class BookHandler {
                 bookData.add(rs.getDate("Book2_Due_Date") + "");
                 bookData.add(rs.getString("Status"));
                 bookData.add(rs.getString("No_of_Books"));
-              
+
             }
 
 
@@ -238,6 +239,7 @@ public class BookHandler {
 
             rs.absolute(1);
             rs.updateString("Status", "Unavailable");
+            rs.updateDate("Final_Due_Date", bookObj.getFinalDueDate());
             rs.updateRow();
 
         } catch (SQLException ex) {
@@ -291,15 +293,16 @@ public class BookHandler {
 
             rs.absolute(1);
             rs.updateString("Status", "Available");
+            rs.updateDate("Final_Due_Date", null);
             rs.updateRow();
 
         } catch (SQLException ex) {
             Logger.getLogger(BookHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    public String checkReservation(int bookId){
-     String result = null;
+
+    public String checkReservation(int bookId) {
+        String result = null;
         String query = "SELECT * FROM book WHERE Id='" + bookId + "'";
         Statement stmt;
         try {
@@ -319,8 +322,8 @@ public class BookHandler {
 
         return result;
     }
-    
-    public void updateReservation(int bookId, String entry){
+
+    public void updateReservation(int bookId, String entry) {
         String query = "SELECT * FROM book WHERE Id='" + bookId + "'";
         Statement stmt;
         try {
@@ -337,6 +340,28 @@ public class BookHandler {
         } catch (SQLException ex) {
             Logger.getLogger(BookHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public Date getFinalDueDate(String bookId) {
+        String query = "SELECT FROM book WHERE Id='" + bookId + "'";
+        Statement stmt;
+        Date date = null;
+        try {
+            stmt = (Statement) conn.createStatement(
+                    ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    ResultSet.CONCUR_UPDATABLE);
+
+            ResultSet rs = stmt.executeQuery(query);
+
+            if (rs.next()) {
+                date = rs.getDate("Final_Due_Date");
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(BookHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return date;
 
     }
 }
