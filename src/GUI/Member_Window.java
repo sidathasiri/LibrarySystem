@@ -704,9 +704,6 @@ public class Member_Window extends javax.swing.JFrame {
         if (Integer.parseInt(loadedData.get(4)) > 0) {
             loadTable();
         }
-
-
-
     }
 
     public void loadTable() {
