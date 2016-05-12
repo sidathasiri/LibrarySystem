@@ -38,7 +38,7 @@ public class PeopleHandler {
 
     public void addPerson(Person m, String post) {
         if (post.equalsIgnoreCase("member")) {
-            String query = "INSERT INTO member (Name, Address, Contact_Number, Username, Password) VALUES ('" + m.getName() + "', '" + m.getAddress() + "', '" + m.getContactNumber() + "', '" + m.getUsername() + "', '" + m.getPassword() + "')";
+            String query = "INSERT INTO member (Name, Address, Contact_Number, Username, Password, Email) VALUES ('" + m.getName() + "', '" + m.getAddress() + "', '" + m.getContactNumber() + "', '" + m.getUsername() + "', '" + m.getPassword() + "', '"+m.getEmail()+"')";
             try {
                 st.executeUpdate(query);
             } catch (SQLException ex) {
@@ -126,7 +126,7 @@ public class PeopleHandler {
 
             ResultSet rs = stmt.executeQuery(query);
             rs.absolute(1);
-            rs.updateString("Password", "12345");
+            rs.updateString("Password", "user");
             rs.updateRow();
         } catch (SQLException ex) {
             Logger.getLogger(PeopleHandler.class.getName()).log(Level.SEVERE, null, ex);
@@ -145,7 +145,7 @@ public class PeopleHandler {
 
             ResultSet rs = stmt.executeQuery(query);
             rs.absolute(1);
-            rs.updateString("Username", "libraryuser");
+            rs.updateString("Username", memId);
             rs.updateRow();
         } catch (SQLException ex) {
             Logger.getLogger(PeopleHandler.class.getName()).log(Level.SEVERE, null, ex);
@@ -208,6 +208,7 @@ public class PeopleHandler {
                 stringArr.add(rsMem.getString("Status"));
                 stringArr.add(rsMem.getString("Username"));
                 stringArr.add(rsMem.getString("Password"));
+                stringArr.add(rsMem.getString("Email"));
             } else {
                 ResultSet rsStaff = stmt.executeQuery(query2);
 
@@ -244,6 +245,7 @@ public class PeopleHandler {
                 details.add(rs.getString("No_Of_Taken_Books"));
                 details.add(rs.getString("Contact_Number"));
                 details.add(rs.getString("Address"));
+                details.add(rs.getString("Email"));
             }
 
 
@@ -342,7 +344,7 @@ public class PeopleHandler {
 
                 rs2.absolute(1);
                 rs2.updateString("Username", memObj.getUsername());
-                rs2.updateString("Password", memObj.getPassword());
+                rs2.updateString("Password", memObj.getPassword().toString());
                 rs2.updateRow();
                 JOptionPane.showMessageDialog(null, "Change Succesful!", "Change", JOptionPane.INFORMATION_MESSAGE);
 

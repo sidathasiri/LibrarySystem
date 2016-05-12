@@ -8,18 +8,19 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 public class Admin extends StaffMember {
 
     BookHandler bookHandlerObj = new BookHandler("admin");
     PeopleHandler personHandlerObj = new PeopleHandler("admin");
-    
+
     public Admin(String name, String address, String contactNum) {
         super(name, address, contactNum);
     }
 
-    public void addMember(String name, String address, String contactNum) {
-        Member memObj = new Member(name, address, contactNum);
+    public void addMember(String name, String address, String contactNum, String email) {
+        Member memObj = new Member(name, address, contactNum, email);
         personHandlerObj.addPerson(memObj, "member");
     }
 
@@ -42,6 +43,7 @@ public class Admin extends StaffMember {
     }
 
     public void addBook(String name, String author, String ISBN, int page, String category, String pubDate, int issueNo) {
+
         SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
 
         try {
@@ -50,7 +52,7 @@ public class Admin extends StaffMember {
             Book bookObj = new Book(name, author, ISBN, page, category, date, issueNo);
             bookHandlerObj.addBook(bookObj);
         } catch (ParseException ex) {
-            Logger.getLogger(Admin.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Date format not correct", "Error", JOptionPane.ERROR);
         }
     }
 

@@ -6,6 +6,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -239,8 +241,8 @@ public class BookHandler {
 
             rs.absolute(1);
             rs.updateString("Status", "Unavailable");
-            rs.updateDate("Final_Due_Date", bookObj.getFinalDueDate());
             rs.updateRow();
+            setFinalDueDate(bookObj.getBookId(), bookObj.getFinalDueDate().toString());
 
         } catch (SQLException ex) {
             Logger.getLogger(BookHandler.class.getName()).log(Level.SEVERE, null, ex);
@@ -343,7 +345,7 @@ public class BookHandler {
     }
 
     public Date getFinalDueDate(String bookId) {
-        String query = "SELECT FROM book WHERE Id='" + bookId + "'";
+        String query = "SELECT * FROM book WHERE Id='" + bookId + "'";
         Statement stmt;
         Date date = null;
         try {
@@ -360,8 +362,37 @@ public class BookHandler {
         } catch (SQLException ex) {
             Logger.getLogger(BookHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        return date;
 
+        return date;
+    }
+
+    public void setFinalDueDate(String bookId, String d) {
+        String query = "SELECT * FROM book WHERE Id='" + bookId + "'";
+        Statement stmt;
+
+        SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+        java.util.Date date;
+        try {
+            date = sdf1.parse(d);
+
+            java.sql.Date sqlDueDate = new Date(date.getTime());
+            try {
+                stmt = (Statement) conn.createStatement(
+                        ResultSet.TYPE_SCROLL_INSENSITIVE,
+                        ResultSet.CONCUR_UPDATABLE);
+
+                ResultSet rs = stmt.executeQuery(query);
+
+                rs.absolute(1);
+                rs.updateDate("Final_Due_Date", sqlDueDate);
+                rs.updateRow();
+
+            } catch (SQLException ex) {
+                Logger.getLogger(BookHandler.class.getName()).log(Level.SEVERE, null, ex);
+
+            }
+        } catch (ParseException ex) {
+            Logger.getLogger(BookHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

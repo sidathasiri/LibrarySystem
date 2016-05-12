@@ -28,6 +28,7 @@ public class Member_Window extends javax.swing.JFrame {
     JComboBox comboBox;
     PeopleHandler peopleHandlerObj = new PeopleHandler("admin");
     BookHandler bookHandlerObj = new BookHandler("admin");
+    DefaultTableModel model1;
 
     public Member_Window() {
         initComponents();
@@ -70,7 +71,7 @@ public class Member_Window extends javax.swing.JFrame {
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        extendBtn = new javax.swing.JButton();
         jLabel21 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel15 = new javax.swing.JLabel();
@@ -172,7 +173,7 @@ public class Member_Window extends javax.swing.JFrame {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false
@@ -210,10 +211,10 @@ public class Member_Window extends javax.swing.JFrame {
         jLabel14.setForeground(new java.awt.Color(255, 255, 255));
         jLabel14.setText("jLabel14");
 
-        jButton1.setText("Extend");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        extendBtn.setText("Extend");
+        extendBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                extendBtnActionPerformed(evt);
             }
         });
 
@@ -225,32 +226,31 @@ public class Member_Window extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(58, 58, 58)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel7))
-                        .addGap(28, 28, 28)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel13)
-                            .addComponent(jLabel14)))
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jButton1)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel8)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel5))
-                        .addGap(37, 37, 37)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel9)
-                            .addComponent(jLabel10)
-                            .addComponent(jLabel11)
-                            .addComponent(jLabel12))))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(extendBtn)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel6)
+                                .addComponent(jLabel7))
+                            .addGap(28, 28, 28)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel13)
+                                .addComponent(jLabel14)))
+                        .addComponent(jLabel8)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel2)
+                                .addComponent(jLabel3)
+                                .addComponent(jLabel4)
+                                .addComponent(jLabel5))
+                            .addGap(37, 37, 37)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel9)
+                                .addComponent(jLabel10)
+                                .addComponent(jLabel11)
+                                .addComponent(jLabel12)))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 284, Short.MAX_VALUE)
                 .addComponent(jLabel21)
                 .addGap(75, 75, 75))
@@ -289,9 +289,9 @@ public class Member_Window extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel21))
-                .addGap(29, 29, 29)
-                .addComponent(jButton1)
-                .addContainerGap(114, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(extendBtn)
+                .addContainerGap(132, Short.MAX_VALUE))
         );
 
         jTabbedPane2.addTab("Profile", jPanel2);
@@ -626,9 +626,23 @@ public class Member_Window extends javax.swing.JFrame {
         login.setVisible(true);
     }//GEN-LAST:event_logoutBtnActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-           
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void extendBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_extendBtnActionPerformed
+        String bookId = jTable1.getValueAt(jTable1.getSelectedRow(), 1).toString();
+        if (bookHandlerObj.checkReservation(Integer.parseInt(bookId)).equalsIgnoreCase("false")) {
+            String issueDate = jTable1.getValueAt(jTable1.getSelectedRow(), 2).toString();
+            String dueDate = jTable1.getValueAt(jTable1.getSelectedRow(), 3).toString();
+
+            java.sql.Date newDate;
+            newDate = LibrarySystem.loggedMember.extendBook(bookId, issueDate, dueDate);
+            model1.setValueAt(newDate, jTable1.getSelectedRow(), 3);
+            bookHandlerObj.setFinalDueDate(bookId, newDate.toString());
+            JOptionPane.showMessageDialog(rootPane, "Extend Successfull!", "Extend", JOptionPane.INFORMATION_MESSAGE);
+        }
+        else{
+            JOptionPane.showMessageDialog(rootPane, "You can not extend this book since it is reserved!", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+    }//GEN-LAST:event_extendBtnActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
@@ -645,11 +659,17 @@ public class Member_Window extends javax.swing.JFrame {
         if (!jTextField2.getText().equals("")) {
             LibrarySystem.loggedMember.setContactNumber(jTextField2.getText());
             check = true;
+  
         }
 
-        if (check = true) {
+        if (check) {
+
             peopleHandlerObj.updateProfile(libraryObj.loggedMember);
             JOptionPane.showMessageDialog(rootPane, "Updated profile!", "Update", JOptionPane.INFORMATION_MESSAGE);
+        }
+        
+        else{
+            JOptionPane.showMessageDialog(rootPane, "Enter valid data!", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_updateBtnActionPerformed
 
@@ -663,18 +683,22 @@ public class Member_Window extends javax.swing.JFrame {
             isChanged = true;
         }
 
-        if (!jPasswordField1.getText().equals("")) {
+        if (jPasswordField1.getPassword().length!=0) {
             LibrarySystem.loggedMember.setPassword(jPasswordField1.getText());
             check = true;
         }
 
-        if (check = true) {
+        if (check) {
             peopleHandlerObj.changeLogin(LibrarySystem.loggedMember, isChanged);
+        }
+        
+        else{
+            JOptionPane.showMessageDialog(rootPane, "Enter valid data", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_changeBtnActionPerformed
 
     private void searchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBtnActionPerformed
-        
+
         LibrarySystem.loggedMember.searchBook(jTextField4.getText(), jTextField5.getText(), jComboBox1.getSelectedItem().toString(), table2);
 
     }//GEN-LAST:event_searchBtnActionPerformed
@@ -686,7 +710,7 @@ public class Member_Window extends javax.swing.JFrame {
     private void cancelRequestBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelRequestBtnActionPerformed
         LibrarySystem.loggedMember.cancelReserve(Integer.parseInt(jTable3.getValueAt(jTable3.getSelectedRow(), 0).toString()));
         jTable3.removeAll();
-        
+
     }//GEN-LAST:event_cancelRequestBtnActionPerformed
 
     public void setLogin(Login x) {
@@ -712,18 +736,18 @@ public class Member_Window extends javax.swing.JFrame {
         table1 = jTable1;
         bookData = bookHandlerObj.loadOrderedBookData(Integer.parseInt(jLabel10.getText()));
         if (bookData.get(8).equalsIgnoreCase("active")) {
-            Object row1[] = {bookData.get(0), bookData.get(1), bookData.get(2), bookData.get(3)};
-            Object row2[] = {bookData.get(4), bookData.get(5), bookData.get(6), bookData.get(7)};
-            DefaultTableModel model = (DefaultTableModel) table1.getModel();
-            model.addRow(row1);
-            model.addRow(row2);
+            Object row1[] = {bookData.get(0), bookData.get(1), bookData.get(2), bookHandlerObj.getFinalDueDate(bookData.get(1))};
+            Object row2[] = {bookData.get(4), bookData.get(5), bookData.get(6), bookHandlerObj.getFinalDueDate(bookData.get(5))};
+            model1 = (DefaultTableModel) table1.getModel();
+            model1.addRow(row1);
+            model1.addRow(row2);
         }
     }
-    
-    public void loadReservedBooks(int bookId){
+
+    public void loadReservedBooks(int bookId) {
         ArrayList<String> bookData;
         bookData = bookHandlerObj.loadBookData(bookId);
-        System.out.println("test:"+bookId);
+        System.out.println("test:" + bookId);
         Object row[] = {bookData.get(1), bookData.get(0), bookData.get(2), bookData.get(4), bookData.get(5), bookData.get(6), bookData.get(7)};
         DefaultTableModel model = (DefaultTableModel) jTable3.getModel();
         model.addRow(row);
@@ -766,7 +790,7 @@ public class Member_Window extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancelRequestBtn;
     private javax.swing.JButton changeBtn;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton extendBtn;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;

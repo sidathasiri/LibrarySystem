@@ -5,8 +5,11 @@
 package GUI;
 
 import DB.BookHandler;
+import DB.PeopleHandler;
+import java.util.ArrayList;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import librarysystem.LibrarySystem;
 
 /**
@@ -22,6 +25,7 @@ public class Admin_Window extends javax.swing.JFrame {
     Login login;
     JComboBox comboBox;
     BookHandler bookHandlerObj = new BookHandler("admin");
+    PeopleHandler peopleHanlerObj = new PeopleHandler("admin");
 
     public Admin_Window() {
         initComponents();
@@ -54,6 +58,8 @@ public class Admin_Window extends javax.swing.JFrame {
         jTextField6 = new javax.swing.JTextField();
         registerMemBtn = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jTextField14 = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
@@ -72,6 +78,14 @@ public class Admin_Window extends javax.swing.JFrame {
         newCategoryBtn = new javax.swing.JButton();
         jLabel15 = new javax.swing.JLabel();
         regBookBtn = new javax.swing.JButton();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel16 = new javax.swing.JLabel();
+        jTextField8 = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        searchBtn = new javax.swing.JButton();
+        resetUsernameBtn = new javax.swing.JButton();
+        resetPasswordBtn = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         logoutBtn = new javax.swing.JButton();
@@ -85,16 +99,28 @@ public class Admin_Window extends javax.swing.JFrame {
         jPanel1.setForeground(new java.awt.Color(255, 255, 255));
 
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("First Name:");
+        jLabel1.setText("First Name*:");
 
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Last Name:");
 
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("Address:");
+        jLabel3.setText("Address*:");
 
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Contact Number:");
+
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
+
+        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField3ActionPerformed(evt);
+            }
+        });
 
         registerMemBtn.setBackground(new java.awt.Color(255, 255, 255));
         registerMemBtn.setText("Register Member");
@@ -105,6 +131,9 @@ public class Admin_Window extends javax.swing.JFrame {
         });
 
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/useradd EDT.png"))); // NOI18N
+
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel8.setText("Email:");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -130,11 +159,15 @@ public class Admin_Window extends javax.swing.JFrame {
                                 .addComponent(jTextField5, javax.swing.GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE))
                             .addComponent(jTextField2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel4)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel8))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField6, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
-                            .addComponent(registerMemBtn))))
+                            .addComponent(registerMemBtn)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jTextField14, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jTextField6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 338, Short.MAX_VALUE)
                 .addComponent(jLabel7)
                 .addGap(120, 120, 120))
@@ -145,7 +178,7 @@ public class Admin_Window extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(30, 30, 30)
                         .addComponent(jLabel7))
@@ -170,9 +203,13 @@ public class Admin_Window extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
                             .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(35, 35, 35)
-                        .addComponent(registerMemBtn)))
-                .addContainerGap(129, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel8)
+                            .addComponent(jTextField14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(20, 20, 20)
+                .addComponent(registerMemBtn)
+                .addContainerGap(98, Short.MAX_VALUE))
         );
 
         jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jTextField1, jTextField2, jTextField3, jTextField4, jTextField5, jTextField6});
@@ -182,25 +219,25 @@ public class Admin_Window extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(51, 51, 51));
 
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel6.setText("Name:");
+        jLabel6.setText("Name*:");
 
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setText("Author:");
+        jLabel9.setText("Author*:");
 
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel10.setText("ISBN:");
+        jLabel10.setText("ISBN*:");
 
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel11.setText("Category:");
+        jLabel11.setText("Category*:");
 
         jLabel12.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel12.setText("No of Pages:");
+        jLabel12.setText("No of Pages*:");
 
         jLabel13.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel13.setText("Published Date:");
+        jLabel13.setText("Published Date*:");
 
         jLabel14.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel14.setText("Issue No:");
+        jLabel14.setText("Issue No*:");
 
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -251,7 +288,7 @@ public class Admin_Window extends javax.swing.JFrame {
                     .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField13, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 279, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 273, Short.MAX_VALUE)
                 .addComponent(jLabel15)
                 .addGap(70, 70, 70))
         );
@@ -301,6 +338,92 @@ public class Admin_Window extends javax.swing.JFrame {
         );
 
         jTabbedPane1.addTab("Add Books", jPanel2);
+
+        jPanel4.setBackground(new java.awt.Color(51, 51, 51));
+
+        jLabel16.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel16.setText("Member ID:");
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Name", "Address", "Contact Number"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(jTable1);
+
+        searchBtn.setText("Search");
+        searchBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchBtnActionPerformed(evt);
+            }
+        });
+
+        resetUsernameBtn.setText("Reset Username");
+        resetUsernameBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                resetUsernameBtnActionPerformed(evt);
+            }
+        });
+
+        resetPasswordBtn.setText("Reset Password");
+        resetPasswordBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                resetPasswordBtnActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(46, 46, 46)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 806, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(searchBtn)
+                        .addGroup(jPanel4Layout.createSequentialGroup()
+                            .addComponent(jLabel16)
+                            .addGap(37, 37, 37)
+                            .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(194, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(resetUsernameBtn)
+                .addGap(69, 69, 69)
+                .addComponent(resetPasswordBtn)
+                .addGap(270, 270, 270))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(53, 53, 53)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel16)
+                    .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(searchBtn)
+                .addGap(69, 69, 69)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(47, 47, 47)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(resetUsernameBtn)
+                    .addComponent(resetPasswordBtn))
+                .addContainerGap(133, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("Rest Member Accounts", jPanel4);
 
         jPanel3.setBackground(new java.awt.Color(102, 102, 102));
         jPanel3.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 2, true));
@@ -363,13 +486,27 @@ public class Admin_Window extends javax.swing.JFrame {
     }//GEN-LAST:event_logoutBtnActionPerformed
 
     private void regBookBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_regBookBtnActionPerformed
-        LibrarySystem.loggedAdmin.addBook(jTextField7.getText(), jTextField9.getText(), jTextField10.getText(), Integer.parseInt(jTextField11.getText()), jComboBox1.getSelectedItem().toString(), jTextField12.getText(), Integer.parseInt(jTextField13.getText()));
-        jTextField7.setText("");
-        jTextField9.setText("");
-        jTextField10.setText("");
-        jTextField11.setText("");
-        jTextField12.setText("");
-        jTextField13.setText("");
+       
+        if (jTextField7.getText().equals("") || jTextField9.getText().equals("") || jTextField10.getText().equals("") || jTextField11.getText().equals("") || jTextField12.getText().equals("") || jTextField13.getText().equals("")) {
+            JOptionPane.showMessageDialog(rootPane, "Enter required data", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            try {
+                LibrarySystem.loggedAdmin.addBook(jTextField7.getText(), jTextField9.getText(), jTextField10.getText(), Integer.parseInt(jTextField11.getText()), jComboBox1.getSelectedItem().toString(), jTextField12.getText(), Integer.parseInt(jTextField13.getText()));
+                jTextField7.setText("");
+                jTextField9.setText("");
+                jTextField10.setText("");
+                jTextField11.setText("");
+                jTextField12.setText("");
+                jTextField13.setText("");
+                JOptionPane.showMessageDialog(rootPane, "Book added to system", "Book add", JOptionPane.INFORMATION_MESSAGE);
+            }  
+            
+            catch (Exception ex) {
+                JOptionPane.showMessageDialog(rootPane, "Input data is incorrect!", "Error", JOptionPane.INFORMATION_MESSAGE);
+            }
+            
+            
+        }
     }//GEN-LAST:event_regBookBtnActionPerformed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
@@ -377,13 +514,18 @@ public class Admin_Window extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void registerMemBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerMemBtnActionPerformed
-        LibrarySystem.loggedAdmin.addMember(jTextField1.getText() + " " + jTextField2.getText(), jTextField3.getText() + " " + jTextField4.getText() + " " + jTextField5.getText(), jTextField6.getText());
-        jTextField1.setText("");
-        jTextField2.setText("");
-        jTextField3.setText("");
-        jTextField4.setText("");
-        jTextField5.setText("");
-        jTextField6.setText("");
+        if (jTextField1.getText().equals("") || jTextField3.getText().equals("")) {
+            JOptionPane.showMessageDialog(rootPane, "Required data not found!", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            LibrarySystem.loggedAdmin.addMember(jTextField1.getText() + " " + jTextField2.getText(), jTextField3.getText() + " " + jTextField4.getText() + " " + jTextField5.getText(), jTextField6.getText(), jTextField14.getText());
+            jTextField1.setText("");
+            jTextField2.setText("");
+            jTextField3.setText("");
+            jTextField4.setText("");
+            jTextField5.setText("");
+            jTextField6.setText("");
+            JOptionPane.showMessageDialog(rootPane, "Member Added to System", "Member add", JOptionPane.INFORMATION_MESSAGE);
+        }
     }//GEN-LAST:event_registerMemBtnActionPerformed
 
     private void newCategoryBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newCategoryBtnActionPerformed
@@ -396,14 +538,38 @@ public class Admin_Window extends javax.swing.JFrame {
         }
         if (check) {
             LibrarySystem.categoryList.add(category);
-            bookHandlerObj.addNewCategory(category);            
-        }
-        else{
+            bookHandlerObj.addNewCategory(category);
+        } else {
             JOptionPane.showMessageDialog(rootPane, "This category already exists!", "Error", JOptionPane.ERROR_MESSAGE);
         }
         repaintComboBox();
 
     }//GEN-LAST:event_newCategoryBtnActionPerformed
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1ActionPerformed
+
+    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField3ActionPerformed
+
+    private void searchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBtnActionPerformed
+        ArrayList<String> arr = new ArrayList<>();
+        arr = peopleHanlerObj.searchMember(Integer.parseInt(jTextField8.getText()));
+        Object row[] = {arr.get(0), arr.get(3), arr.get(4)};
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.addRow(row);
+        
+    }//GEN-LAST:event_searchBtnActionPerformed
+
+    private void resetUsernameBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetUsernameBtnActionPerformed
+        LibrarySystem.loggedAdmin.resetUsername(jTextField8.getText());
+    }//GEN-LAST:event_resetUsernameBtnActionPerformed
+
+    private void resetPasswordBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetPasswordBtnActionPerformed
+        LibrarySystem.loggedAdmin.resetPassword(jTextField8.getText());
+    }//GEN-LAST:event_resetPasswordBtnActionPerformed
     public void setLogin(Login x) {
         login = x;
     }
@@ -458,32 +624,42 @@ public class Admin_Window extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField10;
     private javax.swing.JTextField jTextField11;
     private javax.swing.JTextField jTextField12;
     private javax.swing.JTextField jTextField13;
+    private javax.swing.JTextField jTextField14;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField jTextField7;
+    private javax.swing.JTextField jTextField8;
     private javax.swing.JTextField jTextField9;
     private javax.swing.JButton logoutBtn;
     private javax.swing.JButton newCategoryBtn;
     private javax.swing.JButton regBookBtn;
     private javax.swing.JButton registerMemBtn;
+    private javax.swing.JButton resetPasswordBtn;
+    private javax.swing.JButton resetUsernameBtn;
+    private javax.swing.JButton searchBtn;
     // End of variables declaration//GEN-END:variables
 }

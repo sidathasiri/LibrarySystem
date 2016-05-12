@@ -3,6 +3,8 @@ package librarysystem;
 import DB.ReserveHandler;
 import java.util.ArrayList;
 import DB.BookHandler;
+import DB.ExtendHandler;
+import java.sql.Date;
 
 public class Member extends Person{
     private Book book1,book2;
@@ -10,13 +12,15 @@ public class Member extends Person{
     private int takenBooks;
     ReserveHandler reserveHandlerObj = new ReserveHandler("admin");
     BookHandler bookHandlerObj = new BookHandler("admin");
+    ExtendHandler extendHandlerObj = new ExtendHandler("admin");
     
-    public Member(String name, String address, String contactNum){
+    public Member(String name, String address, String contactNum, String email){
         setName(name);
         setAddress(address);
         setContactNumber(contactNum);
         setUsername("libraryuser");
         setPassword("12345");
+        setEmail(email);
         //load user data
     }
 
@@ -85,6 +89,10 @@ public class Member extends Person{
     public void cancelReserve(int bookId){
         reserveHandlerObj.cancelReservation(Integer.parseInt(LibrarySystem.loggedMember.getId()));
         bookHandlerObj.updateReservation(bookId, "false");
+    }
+    
+    public Date extendBook(String bookId, String issueD, String dueD){
+        return extendHandlerObj.addExtend(bookId, issueD, dueD);
     }
 
     

@@ -12,6 +12,15 @@ public class Person {
     private String id;
     private String username, password;
     private String contactNumber;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    private String email;
     BookHandler bookHandlerObj = new BookHandler("member");
     PeopleHandler peopleHandlerObj = new PeopleHandler("member");
 

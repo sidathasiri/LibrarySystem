@@ -238,7 +238,7 @@ public class Login extends javax.swing.JFrame {
         }
         
         else if(post.equalsIgnoreCase("member")){
-            Member obj = new Member(loadedData.get(0), loadedData.get(1), loadedData.get(2));
+            Member obj = new Member(loadedData.get(0), loadedData.get(1), loadedData.get(2), loadedData.get(8));
             obj.setId(loadedData.get(3));
             obj.setUsername(loadedData.get(6));
             obj.setPassword(loadedData.get(7));
@@ -249,7 +249,6 @@ public class Login extends javax.swing.JFrame {
             if(reserveHandler.loadReservedBook(Integer.parseInt(obj.getId()))!=0){
                 memWinObj.loadReservedBooks(reserveHandler.loadReservedBook(Integer.parseInt(obj.getId())));
             }
-            
             
             this.dispose();
             memWinObj.setVisible(true);

@@ -34,7 +34,7 @@ public abstract class StaffMember extends Person {
         ArrayList<String> memberDetails = peopleHandlerObj.searchMember(memId);
         ArrayList<String> bookDetails = bookHandlerObj.loadBookData(bookId);
 
-        Member memObj = new Member(memberDetails.get(0), memberDetails.get(4), memberDetails.get(3));
+        Member memObj = new Member(memberDetails.get(0), memberDetails.get(4), memberDetails.get(3), memberDetails.get(5));
         memObj.setTakenBooks(Integer.parseInt(memberDetails.get(2)));
         memObj.setId(memberDetails.get(1));
         java.util.Date parsed;
@@ -55,6 +55,7 @@ public abstract class StaffMember extends Person {
                     Order orderObj;
                     orderObj = new Order(memObj, bookObj, now, dueDate);
                     memObj.setOrder(orderObj);
+                    bookObj.setFinalDueDate(dueDate);
                     orderHandlerObj.createOrder(orderObj, memObj);
                     peopleHandlerObj.issueBooktoUser(memObj);
                     bookHandlerObj.issueBook(bookObj);
@@ -81,7 +82,7 @@ public abstract class StaffMember extends Person {
             parsed = format.parse("20100214");
             java.sql.Date date = new java.sql.Date(parsed.getTime());
 
-            Member memObj = new Member(memberDetails.get(0), memberDetails.get(4), memberDetails.get(3));
+            Member memObj = new Member(memberDetails.get(0), memberDetails.get(4), memberDetails.get(3), memberDetails.get(5));
             memObj.setTakenBooks(Integer.parseInt(memberDetails.get(2)));
             memObj.setId(memberDetails.get(1));
 

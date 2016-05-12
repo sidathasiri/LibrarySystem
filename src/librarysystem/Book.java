@@ -1,11 +1,24 @@
 package librarysystem;
 
 import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Book {
+
     private String bookId;
     private String author;
     private String name;
+
+    public Date getFinalDueDate() {
+        return finalDueDate;
+    }
+
+    public void setFinalDueDate(Date finalDueDate) {
+       this.finalDueDate = finalDueDate;
+    }
     private String ISBN;
     private int noOfPages;
     private String category;
@@ -13,8 +26,10 @@ public class Book {
     private Date publishedDate;
     private Date issueDate, dueDate;
     private String status;
+    private Date finalDueDate;
     //Name, Author, ISBN, No_Of_Pages, Category, Published_Date
-    public Book(String name, String author, String ISBN, int page, String category, Date publishedDate, int issueNo){
+
+    public Book(String name, String author, String ISBN, int page, String category, Date publishedDate, int issueNo) {
         this.name = name;
         this.ISBN = ISBN;
         this.noOfPages = page;
@@ -22,7 +37,7 @@ public class Book {
         this.author = author;
         this.publishedDate = publishedDate;
         this.issueNo = issueNo;
-        
+
     }
 
     public void setBookId(String bookId) {
@@ -112,5 +127,4 @@ public class Book {
     public void setDueDate(Date dueDate) {
         this.dueDate = dueDate;
     }
-   
 }

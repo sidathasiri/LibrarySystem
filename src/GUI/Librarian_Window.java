@@ -411,7 +411,7 @@ public class Librarian_Window extends javax.swing.JFrame {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false
@@ -565,8 +565,8 @@ public class Librarian_Window extends javax.swing.JFrame {
         model = (DefaultTableModel) table4.getModel();
         bookData = bookHandlerObj.loadOrderedBookData(Integer.parseInt(jTextField5.getText()));
         if (bookData.get(8).equalsIgnoreCase("active") && Integer.parseInt(bookData.get(9)) > 0) {
-            Object row1[] = {bookData.get(0), bookData.get(1), bookData.get(2), bookData.get(3)};
-            Object row2[] = {bookData.get(4), bookData.get(5), bookData.get(6), bookData.get(7)};
+            Object row1[] = {bookData.get(0), bookData.get(1), bookData.get(2), bookHandlerObj.getFinalDueDate(bookData.get(1))};
+            Object row2[] = {bookData.get(4), bookData.get(5), bookData.get(6), bookHandlerObj.getFinalDueDate(bookData.get(5))};
             DefaultTableModel model = (DefaultTableModel) table4.getModel();
             model.setRowCount(0);
             model.addRow(row1);

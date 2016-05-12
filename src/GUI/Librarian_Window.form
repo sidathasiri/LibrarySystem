@@ -657,7 +657,7 @@
                         <Column editable="false" title="Name" type="java.lang.String"/>
                         <Column editable="false" title="ID" type="java.lang.String"/>
                         <Column editable="false" title="Issue Date" type="java.lang.String"/>
-                        <Column editable="false" title="Due Date" type="java.lang.String"/>
+                        <Column editable="false" title="Due Date" type="java.lang.Object"/>
                       </Table>
                     </Property>
                     <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
