@@ -708,6 +708,9 @@ public class Member_Window extends javax.swing.JFrame {
     }//GEN-LAST:event_searchBtnActionPerformed
 
     private void reserveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reserveBtnActionPerformed
+        if(jTable2.getSelectedRow() == -1){
+            JOptionPane.showMessageDialog(rootPane, "Select Item", "Error", JOptionPane.ERROR_MESSAGE);
+        }
         LibrarySystem.loggedMember.reserveBook(Integer.parseInt(jTable2.getValueAt(jTable2.getSelectedRow(), 0).toString()));
     }//GEN-LAST:event_reserveBtnActionPerformed
 
