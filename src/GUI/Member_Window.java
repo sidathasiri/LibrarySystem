@@ -708,10 +708,12 @@ public class Member_Window extends javax.swing.JFrame {
     }//GEN-LAST:event_searchBtnActionPerformed
 
     private void reserveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reserveBtnActionPerformed
-        if(jTable2.getSelectedRow() == -1){
+        if (jTable2.getSelectedRow() == -1) {
             JOptionPane.showMessageDialog(rootPane, "Select Item", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            LibrarySystem.loggedMember.reserveBook(Integer.parseInt(jTable2.getValueAt(jTable2.getSelectedRow(), 0).toString()));
+            loadReservedBooks(Integer.parseInt(jTable2.getValueAt(jTable2.getSelectedRow(), 0).toString()));
         }
-        LibrarySystem.loggedMember.reserveBook(Integer.parseInt(jTable2.getValueAt(jTable2.getSelectedRow(), 0).toString()));
     }//GEN-LAST:event_reserveBtnActionPerformed
 
     private void cancelRequestBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelRequestBtnActionPerformed
@@ -759,7 +761,6 @@ public class Member_Window extends javax.swing.JFrame {
     public void loadReservedBooks(int bookId) {
         ArrayList<String> bookData;
         bookData = bookHandlerObj.loadBookData(bookId);
-        System.out.println("test:" + bookId);
         Object row[] = {bookData.get(1), bookData.get(0), bookData.get(2), bookData.get(4), bookData.get(5), bookData.get(6), bookData.get(7)};
         DefaultTableModel model = (DefaultTableModel) jTable3.getModel();
         model.addRow(row);
