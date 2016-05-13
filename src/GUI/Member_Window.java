@@ -627,25 +627,27 @@ public class Member_Window extends javax.swing.JFrame {
     }//GEN-LAST:event_logoutBtnActionPerformed
 
     private void extendBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_extendBtnActionPerformed
-        String bookId = jTable1.getValueAt(jTable1.getSelectedRow(), 1).toString();
-        if(bookHandlerObj.checkIsExtended(bookId).equalsIgnoreCase("false")){
-        if (bookHandlerObj.checkReservation(Integer.parseInt(bookId)).equalsIgnoreCase("false")) {
-            String issueDate = jTable1.getValueAt(jTable1.getSelectedRow(), 2).toString();
-            String dueDate = jTable1.getValueAt(jTable1.getSelectedRow(), 3).toString();
+        if (jTable1.getSelectedRow() == -1) {
+            JOptionPane.showMessageDialog(rootPane, "Select item", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            String bookId = jTable1.getValueAt(jTable1.getSelectedRow(), 1).toString();
+            if (bookHandlerObj.checkIsExtended(bookId).equalsIgnoreCase("false")) {
+                if (bookHandlerObj.checkReservation(Integer.parseInt(bookId)).equalsIgnoreCase("false")) {
+                    String issueDate = jTable1.getValueAt(jTable1.getSelectedRow(), 2).toString();
+                    String dueDate = jTable1.getValueAt(jTable1.getSelectedRow(), 3).toString();
 
-            java.sql.Date newDate;
-            newDate = LibrarySystem.loggedMember.extendBook(bookId, issueDate, dueDate);
-            model1.setValueAt(newDate, jTable1.getSelectedRow(), 3);
-            bookHandlerObj.setFinalDueDate(bookId, newDate.toString());
-            bookHandlerObj.setIsExtend(bookId, "true");
-            JOptionPane.showMessageDialog(rootPane, "Extend Successfull!", "Extend", JOptionPane.INFORMATION_MESSAGE);
-        }
-        else{
-            JOptionPane.showMessageDialog(rootPane, "You can not extend this book since it is reserved!", "Error", JOptionPane.ERROR_MESSAGE);
-        }            
-        }
-        else{
-            JOptionPane.showMessageDialog(rootPane, "Maximum extends reached!", "Extending", JOptionPane.ERROR_MESSAGE);
+                    java.sql.Date newDate;
+                    newDate = LibrarySystem.loggedMember.extendBook(bookId, issueDate, dueDate);
+                    model1.setValueAt(newDate, jTable1.getSelectedRow(), 3);
+                    bookHandlerObj.setFinalDueDate(bookId, newDate.toString());
+                    bookHandlerObj.setIsExtend(bookId, "true");
+                    JOptionPane.showMessageDialog(rootPane, "Extend Successfull!", "Extend", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(rootPane, "You can not extend this book since it is reserved!", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(rootPane, "Maximum extends reached!", "Extending", JOptionPane.ERROR_MESSAGE);
+            }
         }
 
     }//GEN-LAST:event_extendBtnActionPerformed
@@ -665,16 +667,14 @@ public class Member_Window extends javax.swing.JFrame {
         if (!jTextField2.getText().equals("")) {
             LibrarySystem.loggedMember.setContactNumber(jTextField2.getText());
             check = true;
-  
+
         }
 
         if (check) {
 
             peopleHandlerObj.updateProfile(libraryObj.loggedMember);
             JOptionPane.showMessageDialog(rootPane, "Updated profile!", "Update", JOptionPane.INFORMATION_MESSAGE);
-        }
-        
-        else{
+        } else {
             JOptionPane.showMessageDialog(rootPane, "Enter valid data!", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_updateBtnActionPerformed
@@ -689,16 +689,14 @@ public class Member_Window extends javax.swing.JFrame {
             isChanged = true;
         }
 
-        if (jPasswordField1.getPassword().length!=0) {
+        if (jPasswordField1.getPassword().length != 0) {
             LibrarySystem.loggedMember.setPassword(jPasswordField1.getText());
             check = true;
         }
 
         if (check) {
             peopleHandlerObj.changeLogin(LibrarySystem.loggedMember, isChanged);
-        }
-        
-        else{
+        } else {
             JOptionPane.showMessageDialog(rootPane, "Enter valid data", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_changeBtnActionPerformed
@@ -714,8 +712,13 @@ public class Member_Window extends javax.swing.JFrame {
     }//GEN-LAST:event_reserveBtnActionPerformed
 
     private void cancelRequestBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelRequestBtnActionPerformed
-        LibrarySystem.loggedMember.cancelReserve(Integer.parseInt(jTable3.getValueAt(jTable3.getSelectedRow(), 0).toString()));
-        jTable3.removeAll();
+        if (jTable3.getSelectedRow() == -1) {
+            JOptionPane.showMessageDialog(rootPane, "Select Item", "Error", JOptionPane.ERROR_MESSAGE);
+
+        } else {
+            LibrarySystem.loggedMember.cancelReserve(Integer.parseInt(jTable3.getValueAt(jTable3.getSelectedRow(), 0).toString()));
+            jTable3.removeAll();
+        }
 
     }//GEN-LAST:event_cancelRequestBtnActionPerformed
 
