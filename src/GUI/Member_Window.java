@@ -628,6 +628,7 @@ public class Member_Window extends javax.swing.JFrame {
 
     private void extendBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_extendBtnActionPerformed
         String bookId = jTable1.getValueAt(jTable1.getSelectedRow(), 1).toString();
+        if(bookHandlerObj.checkIsExtended(bookId).equalsIgnoreCase("false")){
         if (bookHandlerObj.checkReservation(Integer.parseInt(bookId)).equalsIgnoreCase("false")) {
             String issueDate = jTable1.getValueAt(jTable1.getSelectedRow(), 2).toString();
             String dueDate = jTable1.getValueAt(jTable1.getSelectedRow(), 3).toString();
@@ -636,10 +637,15 @@ public class Member_Window extends javax.swing.JFrame {
             newDate = LibrarySystem.loggedMember.extendBook(bookId, issueDate, dueDate);
             model1.setValueAt(newDate, jTable1.getSelectedRow(), 3);
             bookHandlerObj.setFinalDueDate(bookId, newDate.toString());
+            bookHandlerObj.setIsExtend(bookId, "true");
             JOptionPane.showMessageDialog(rootPane, "Extend Successfull!", "Extend", JOptionPane.INFORMATION_MESSAGE);
         }
         else{
             JOptionPane.showMessageDialog(rootPane, "You can not extend this book since it is reserved!", "Error", JOptionPane.ERROR_MESSAGE);
+        }            
+        }
+        else{
+            JOptionPane.showMessageDialog(rootPane, "Maximum extends reached!", "Extending", JOptionPane.ERROR_MESSAGE);
         }
 
     }//GEN-LAST:event_extendBtnActionPerformed

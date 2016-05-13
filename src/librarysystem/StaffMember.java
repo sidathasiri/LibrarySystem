@@ -59,6 +59,7 @@ public abstract class StaffMember extends Person {
                     orderHandlerObj.createOrder(orderObj, memObj);
                     peopleHandlerObj.issueBooktoUser(memObj);
                     bookHandlerObj.issueBook(bookObj);
+                    
 
 
                 } else {
@@ -108,6 +109,7 @@ public abstract class StaffMember extends Person {
             java.sql.Date now = new java.sql.Date(Calendar.getInstance().getTime().getTime());
             Return returnObj = new Return(memObj, bookObj, issueD, dueD, now);
             returnHandlerObj.createReturn(returnObj, memObj, issueD, dueD, now, orderId);
+            bookHandlerObj.setIsExtend(bookId, "false");
 
         } catch (ParseException ex) {
             Logger.getLogger(StaffMember.class.getName()).log(Level.SEVERE, null, ex);
