@@ -27,6 +27,7 @@ public abstract class StaffMember extends Person {
         setContactNumber(contactNum);
         setUsername("libraryuser");
         setPassword("12345");
+        
     }
 
     public void issueBook(int memId, int bookId) {
